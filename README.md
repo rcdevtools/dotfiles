@@ -12,6 +12,14 @@ Remember, this repository exists for my personal use only. This means that
 there are settings and configurations in here that I find useful that most
 others would probably find nonsensical. Enjoy, but proceed with caution!
 
+## Installation
+
+TODO
+
+## Usage
+
+TODO
+
 ## Contributing
 
 Even though repository exists for my personal use, it is open to the following
