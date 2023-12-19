@@ -12,6 +12,20 @@ Remember, this repository exists for my personal use only. This means that
 there are settings and configurations in here that I find useful that most
 others would probably find nonsensical. Enjoy, but proceed with caution!
 
+## Contributing
+
+Even though repository exists for my personal use, it is open to the following
+forms of contribution:
+
+1. Bug reports.
+1. Feature requests.
+1. Improvements to dotfile configurations.
+1. Improvements to documentation.
+1. Improvements to CI/CD workflow(s).
+
+View the `CONTRIBUTING.md` file for more information about proper contribution
+to this code base. Please do not use the issue tracker as and FAQ.
+
 ## License
 
 This repository as a whole is distributed under the MIT license. A copy of this
