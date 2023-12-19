@@ -11,3 +11,14 @@ any code you see here __without__ first understanding what it does and how.
 Remember, this repository exists for my personal use only. This means that
 there are settings and configurations in here that I find useful that most
 others would probably find nonsensical. Enjoy, but proceed with caution!
+
+## License
+
+This repository as a whole is distributed under the MIT license. A copy of this
+license is always provided in the `LICENSE.txt` or the `LICENSES/MIT.txt` file.
+I also decided to abide by the REUSE v3.0 specification
+<https://reuse.software/spec/> to make it clear what portions of the project
+belong to what license and who owns the copyright of said portions. This project
+takes inspiration from other peoples dotfile configurations, and I felt it would
+the the right thing to ensure that they recieve credit for their efforts rather
+than blindly taking their code.
