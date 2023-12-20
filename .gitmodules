@@ -1,0 +1,6 @@
+# SPDX-FileCopyrightText: 2023-2024 Jason Pena <jasonpena@awkless.com>
+# SPDX-License-Identifier: MIT
+
+[submodule ".local/share/polyglot"]
+	path = .local/share/polyglot
+	url = https://github.com/agkozak/polyglot.git
