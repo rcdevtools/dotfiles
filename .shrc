@@ -1,0 +1,51 @@
+#!/bin/sh
+# SPDX-FileCopyrightText: 2023-2024 Jason Pena <jasonpena@awkless.com>
+# SPDX-License-Identifier: MIT
+
+# Default shell environment settings...
+
+# If not in interactive mode, then exit...
+case $- in
+  *i*) ;;
+  *) exit ;;
+esac
+
+# Load command aliases...
+if [ -f "$HOME/.aliases" ]; then
+  # shellcheck source=/dev/null
+  . "$HOME/.aliases"
+fi
+
+# Enable Vi mode...
+set -o vi
+
+# Setup PS1...
+if [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/polyglot/polyglot.sh" ]; then
+  # shellcheck source=/dev/null
+  . "${XDG_DATA_HOME:-$HOME/.local/share}/polyglot/polyglot.sh"
+else
+  echo "could not find polyglot.sh, using default PS1" 2>&1
+  PS1="$(logname)@$(uname -n) $PWD/ \$ "
+  export PS1
+fi
+
+# Define colors in Linux console...
+if [ "$TERM" = "linux" ]; then
+  printf "\033]P009141b"
+  printf "\033]P1d15123"
+  printf "\033]P2019a4b"
+  printf "\033]P3fca02f"
+  printf "\033]P4027c9b"
+  printf "\033]P58436f1"
+  printf "\033]P6434b53"
+  printf "\033]P7deb88d"
+  printf "\033]P809141b"
+  printf "\033]P9d15123"
+  printf "\033]PA019a4b"
+  printf "\033]PBfca02f"
+  printf "\033]PC027c9b"
+  printf "\033]PD8436f1"
+  printf "\033]PEff0000"
+  printf "\033]PFdeb88d"
+  clear
+fi
