@@ -1,0 +1,16 @@
+# SPDX-FileCopyrightText: 2023-2024 Jason Pena <jasonpena@awkless.com>
+# SPDX-License-Identifier: MIT
+
+* text=auto
+
+.giattributes text
+.gitignore    text
+*.sh          text diff=shell
+*.md          text diff=markdown
+*.txt         text
+*.png         binary
+*.svg         binary
+*.jpg         binary
+*.jpeg        binary
+*.yaml        text diff=yaml
+*.otf         text
