@@ -23,6 +23,24 @@ There are bug report, feature request, and pull/merge request templates for you
 to use for your submissions to the issue tracker. Please do not use the issue
 tracker as an FAQ.
 
+## Coding Style
+
+Since this repository houses different kinds of dotfiles that use different
+formats and possibly programming languages, there isn't any real coding style to
+really enforce here. Thus, just use these simple guidelines:
+
+1. Avoid Bashims in shell code. Stick to POSIX standard shell script as much
+   as possible. Use shellcheck to verify your work.
+1. Pay attention to the style used by the file you are editing, e.g., if the
+   file uses two spaces for indentation and snake case for naming stuff, then
+   just use two spaces and snake case.
+1. Focus on writing simple code that explains itself. If you need comments to
+   explain what you wrote, then maybe consider simplifying your code.
+
+Overall, I am not going to be very picky about code style given the different
+dotfile configurations that exist in this repository. Thus, just focus on
+readability and consistency.
+
 ## Licensing
 
 This project uses the MIT license for everything. Some portions may be placed
