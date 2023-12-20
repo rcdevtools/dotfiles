@@ -1,0 +1,277 @@
+#!/bin/sh
+# SPDX-FileCopyrightText: 2023-2024 Jason Pena <jasonpena@awkless.com>
+# SPDX-License-Identifier: MIT
+
+NAME="dm"
+VERSION=0.1.0
+GIT_VERSION="$(git version)"
+EXIT_FAILURE=1
+
+# Git is a requirement...
+if ! command -v git > /dev/null 2>&1; then
+  echo "$NAME: git command not found" 2>&1
+  exit "$EXIT_FAILURE"
+fi
+
+# @brief Output help message.
+#
+# @since 0.1.0
+dm_usage()
+{
+  cat << EOF
+usage: $NAME [git-command] | [bootstrap [-r <collection>] | [-s <collection>]]
+
+Simple wrapper over Git with added functionality designed to manage Awklesses'
+dotfiles at <https://github.com/rcdevtools/dotfiles>.
+
+COMMANDS
+  bootstrap
+    Configure dotfile configurations on checkout. Mainly allows you to select
+    which collection of dotfiles you want to have in your home.
+
+    OPTIONS
+      -s <collection>
+        Setup target dotfile collection. Current collection targets include the
+        following:
+          all    Setup everything in remote repository.
+          boiler Setup boilerplate files needed to manage dotfiles on remote.
+
+      -r <collection>
+        Remove target dotfile collection. Be careful, as some of these
+        options will effect multiple applications at once, leaving you with a
+        potentially broken workspace. Current dotfile collection targets include
+        the following:
+          all    Remove everything on local pulled from remote.
+          boiler Remove boilerplate files needed to manage dotfiles on remote.
+
+  help
+    Show help message for dm command. Overides git help command.
+
+  version
+    Show version information for dm command. Overides git version command.
+EOF
+}
+
+# @brief Provide version information.
+#
+# @since 0.1.0
+dm_version()
+{
+  cat << EOF
+dm version $VERSION running on $GIT_VERSION
+EOF
+}
+
+# @brief Wrapper over Git.
+#
+# Treat $HOME as working tree whose history is based off of bare repo
+# $XDG_CONFIG_HOME/config/dotfiles.
+#
+# @param[in] $@ Any standard Git command or option.
+#
+# @since 0.1.0
+dm_git()
+{
+  git_dir="${XDG_CONFIG_HOME:-$HOME/config}/dotfiles"
+  work_tree="$HOME"
+
+  command git --git-dir="$git_dir" --work-tree="$work_tree" "$@"
+
+  unset git_dir work_tree
+}
+
+# @brief Substitute checkout command in Git.
+#
+# This will perform a regular checkout if and only if there are no conflicts. If
+# there are conflicts at checkout, then the conflicting files will be moved to
+# backup directory $XDG_CACHE_HOME/dotfiles_backup before performing another
+# checkout. This avoids overwritting pre-existing dotfiles on user's $HOME.
+#
+# @since 0.1.0
+dm_checkout()
+{
+  backup="${XDG_CACHE_HOME:-$HOME/.cache}/dotfiles_backup"
+
+  mkdir -p "$backup"
+  if ! dm_git checkout > /dev/null 2>&1; then
+    echo "$NAME: backing up pre-existing dotfiles to $backup"
+
+    dm_git checkout 2>&1 | grep -E "^[[:space]]" | awk '{print $1}' |
+      xargs -I{} mv "$HOME/"{} "$backup"/
+
+    dm_git checkout
+  else
+    echo "$NAME: checkout configuration"
+  fi
+
+  unset backup
+}
+
+# @brief Initialize local bare repo.
+#
+# Make sure that the local bare repository was actually cloned to the correct
+# area. This is required for the dm command to function in general.
+#
+# @since 0.1.0
+dm_bareinit()
+{
+  git_dir="${XDG_CONFIG_HOME:-$HOME/config}/dotfiles"
+  remote="git@github.com:rcdevtools/dotfiles.git"
+
+  if [ -d "$git_dir" ]; then
+    unset git_dir remote
+    return
+  fi
+
+  echo "$NAME: initializing bare repository"
+  dm_git clone --bare "$remote" "$git_dir"
+  dm_git config --local status.showUntrackedFiles no
+  dm_git config core.sparseCheckout true
+  dm_checkout
+
+  unset git_dir remote
+}
+
+# @brief Manipulate sparse checkout file.
+#
+# The dm command uses the sparse checkout feature of Git to allow the user to
+# selectively checkout only portions of dotfiles at any given time in $HOME.
+#
+# @param[in] $1 Include ("include") or exclude ("exclude") a set of files on
+#               checkout.
+# @param[in] $2 A list of files to include or exclude on checkout delimited by a
+#               space.
+#
+# @see https://git-scm.com/docs/git-sparse-checkout
+#
+# @since 0.1.0
+dm_sparsemanip()
+{
+  sparse_file="${XDG_CONFIG_HOME:-$HOME/config}/dotfiles/info/sparse-checkout"
+
+  touch "$sparse_file"
+  if ! grep -q "/\*" "$sparse_file"; then
+    printf "/*\n" >> "$sparse_file"
+  fi
+
+  case "$1" in
+  include)
+    IFS=' '
+    set -f
+
+    echo "$NAME: including the following files:"
+    for entry in $2; do
+      if grep -q "$entry" "$sparse_file"; then
+        printf "\t%s\n" "$entry"
+        entry="$(echo "$entry" | sed 's:/:\\/:g')"
+        sed -i "/$entry/d" "$sparse_file"
+      fi
+    done
+
+    unset IFS
+    set +f
+
+    dm_checkout
+    ;;
+  exclude)
+    IFS=' '
+    set -f
+
+    echo "$NAME: excluding the following files:"
+    for entry in $2; do
+      if ! grep -q "$entry" "$sparse_file"; then
+        printf "\t%s\n" "$entry"
+        printf "!%s\n" "$entry" >> "$sparse_file"
+      fi
+    done
+
+    unset IFS
+    set +f
+
+    dm_checkout
+    ;;
+  *)
+    echo "$NAME: unknown action for sparse manipulation $1" 2>&1
+    dm_usage
+    exit "$EXIT_FAILURE"
+    ;;
+  esac
+
+  unset sparse_file
+}
+
+# @brief Set or remove boilerplate files.
+#
+# @param[in] $1 Include ("include") or exclude ("exclude") boilerplate files.
+#
+# @since 0.1.0
+dm_boiler()
+{
+  files=".github/* LICENSES/* LICENSE.txt README.md CONTRIBUTING.md"
+
+  dm_sparsemanip "$1" "$files"
+
+  unset files
+}
+
+# @brief Bootstrap collection of dotfiles.
+#
+# @param[in] $1 Include ("include") or exclude ("exclude") dotfile collection.
+# @param[in] $2 Name of dotfile collection.
+#
+# @since 0.1.0
+dm_bootstrap()
+{
+  case "$2" in
+  all)
+    dm_boiler "$1"
+    ;;
+  boiler)
+    dm_boiler "$1"
+    ;;
+  *)
+    echo "$NAME: Unknown dotfile collection option $2" 2>&1
+    dm_usage
+    exit "$EXIT_FAILURE"
+  ;;
+  esac
+}
+
+# Begin processing commands and their options...
+dm_bareinit
+case "$1" in
+bootstrap)
+  shift 1
+  while getopts "s:r:" opts; do
+    case "$opts" in
+    s)
+      dm_bootstrap "include" "$OPTARG"
+      ;;
+    r)
+      dm_bootstrap "exclude" "$OPTARG"
+      ;;
+    *)
+      echo "$NAME: Invalid option for bootstrap command" 2>&1
+      dm_usage
+      exit "$EXIT_FAILURE"
+      ;;
+    esac
+  done
+  ;;
+checkout)
+  dm_checkout
+  ;;
+help)
+  dm_usage
+  ;;
+version)
+  dm_version
+  ;;
+*)
+  dm_git "$@"
+  ;;
+esac
+
+# Cleanup...
+unset NAME VERSION EXIT_FAILURE
+unset dm_git dm_checkout dm_bareinit dm_sparsemanip
