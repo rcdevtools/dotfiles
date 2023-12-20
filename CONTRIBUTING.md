@@ -41,6 +41,24 @@ Overall, I am not going to be very picky about code style given the different
 dotfile configurations that exist in this repository. Thus, just focus on
 readability and consistency.
 
+## Commit Style
+
+Use Conventional Commits <https://www.conventionalcommits.org/en/v1.0.0>.
+Here are the valid tags that you can use in the log history:
+
+- __chore__: Changes that do not effect production code aka dotfiles.
+- __docs__: Changes to documentation.
+- __fix__: Fix a bug.
+- __feat__: Implement a feature.
+- __rev__: Revert changes from history.
+- __style__: Fix up the style of code.
+- __ref__: Refactor some code.
+
+Scope is optional, but recommended to use to identify where your changes are
+being applied to. Just use the name of the dotfile in lowercase without the file
+extension as the scope. I am not going to be picky about this, just make sure
+that if you use scope in your commits that they generally make sense.
+
 ## Licensing
 
 This project uses the MIT license for everything. Some portions may be placed
