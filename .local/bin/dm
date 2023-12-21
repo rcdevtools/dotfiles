@@ -35,6 +35,7 @@ COMMANDS
         following:
           all    Setup everything in remote repository.
           boiler Setup boilerplate files needed to manage dotfiles on remote.
+          sh     Setup POSIX shell environment files.
 
       -r <collection>
         Remove target dotfile collection. Be careful, as some of these
@@ -43,6 +44,7 @@ COMMANDS
         the following:
           all    Remove everything on local pulled from remote.
           boiler Remove boilerplate files needed to manage dotfiles on remote.
+          sh     Remove POSIX shell environment files.
 
   help
     Show help message for dm command. Overides git help command.
@@ -200,6 +202,54 @@ dm_sparsemanip()
   unset sparse_file
 }
 
+# @brief Manipulate submodules.
+#
+# The dotfile project uses submodules to manage external configurations like
+# external custom programs and scripting projects.
+#
+# @param[in] $1 Include ("include") or exclude ("exclude") a set of submodules
+#               on checkout.
+# @param[in] $2 A list of submodules to include or exclude on checkout
+#               delimited by a space.
+#
+# @see https://git-scm.com/docs/git-submodule
+#
+# @since 0.1.0
+dm_modulemanip()
+{
+  case "$1" in
+  include)
+    IFS=' '
+    set -f
+
+    for module in $2; do
+      dm_git submodule init "$module"
+      dm_git submodule update "$module"
+    done
+
+    unset IFS
+    set +f
+    ;;
+  exclude)
+    IFS=' '
+    set -f
+
+    for module in $2; do
+      dm_git submodule deinit "$module"
+      rm -rfv "$module"
+    done
+
+    unset IFS
+    set +f
+    ;;
+  *)
+    echo "$NAME: unknown action for submodule manipulation $1" 2>&1
+    dm_usage
+    exit "$EXIT_FAILURE"
+    ;;
+  esac
+}
+
 # @brief Set or remove boilerplate files.
 #
 # @param[in] $1 Include ("include") or exclude ("exclude") boilerplate files.
@@ -214,6 +264,22 @@ dm_boiler()
   unset files
 }
 
+# @brief Set or remove base shell files.
+#
+# @param[in] $1 Include ("include") or exclude ("exclude") boilerplate files.
+#
+# @since 0.1.0
+dm_sh()
+{
+  files=".profile .shrc .aliases"
+  modules="${XDG_DATA_HOME:-$HOME/.local/share}/polyglot"
+
+  dm_sparsemanip "$1" "$files"
+  dm_modulemanip "$1" "$modules"
+
+  unset files modules
+}
+
 # @brief Bootstrap collection of dotfiles.
 #
 # @param[in] $1 Include ("include") or exclude ("exclude") dotfile collection.
@@ -225,9 +291,13 @@ dm_bootstrap()
   case "$2" in
   all)
     dm_boiler "$1"
+    dm_sh "$1"
     ;;
   boiler)
     dm_boiler "$1"
+    ;;
+  sh)
+    dm_sh "$1"
     ;;
   *)
     echo "$NAME: Unknown dotfile collection option $2" 2>&1
@@ -274,4 +344,4 @@ esac
 
 # Cleanup...
 unset NAME VERSION EXIT_FAILURE
-unset dm_git dm_checkout dm_bareinit dm_sparsemanip
+unset dm_git dm_checkout dm_bareinit dm_sparsemanip dm_modulemanip
