@@ -267,7 +267,7 @@ dm_boiler()
 
 # @brief Set or remove base shell files.
 #
-# @param[in] $1 Include ("include") or exclude ("exclude") boilerplate files.
+# @param[in] $1 Include ("include") or exclude ("exclude") shell files.
 #
 # @since 0.1.0
 dm_sh()
@@ -279,6 +279,25 @@ dm_sh()
   dm_modulemanip "$1" "$modules"
 
   unset files modules
+}
+
+# @brief Set or remove Bash shell files.
+#
+# This will delete Bash command history if you use the exclude option.
+#
+# @param[in] $1 Include ("include") or exclude ("exclude") bash files.
+#
+# @since 0.1.0
+dm_bash()
+{
+  files=".bashrc .bash_profile"
+
+  dm_sparsemanip "$1" "$files"
+  if [ "$1" = "exclude" ]; then
+    rm -rfv ".bash_history"
+  fi
+
+  unset files
 }
 
 # @brief Bootstrap collection of dotfiles.
@@ -293,12 +312,16 @@ dm_bootstrap()
   all)
     dm_boiler "$1"
     dm_sh "$1"
+    dm_bash "$1"
     ;;
   boiler)
     dm_boiler "$1"
     ;;
   sh)
     dm_sh "$1"
+    ;;
+  bash)
+    dm_bash "$1"
     ;;
   *)
     echo "$NAME: Unknown dotfile collection option $2" 2>&1
