@@ -36,6 +36,7 @@ COMMANDS
           all    Setup everything in remote repository.
           boiler Setup boilerplate files needed to manage dotfiles on remote.
           sh     Setup POSIX shell environment files.
+          bash   Setup Bash shell environment files.
 
       -r <collection>
         Remove target dotfile collection. Be careful, as some of these
@@ -45,6 +46,7 @@ COMMANDS
           all    Remove everything on local pulled from remote.
           boiler Remove boilerplate files needed to manage dotfiles on remote.
           sh     Remove POSIX shell environment files.
+          bash   Remove Bash shell environment files.
 
   help
     Show help message for dm command. Overides git help command.
