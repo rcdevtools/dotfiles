@@ -257,7 +257,8 @@ dm_modulemanip()
 # @since 0.1.0
 dm_boiler()
 {
-  files=".github/* LICENSES/* LICENSE.txt README.md CONTRIBUTING.md"
+  files=".github/* LICENSES/* LICENSE.txt README.md CONTRIBUTING.md \
+.gitattributes .gitignore"
 
   dm_sparsemanip "$1" "$files"
 
