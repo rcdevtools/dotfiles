@@ -33,28 +33,32 @@ COMMANDS
       -s <collection>
         Setup target dotfile collection. Current collection targets include the
         following:
-          all    Setup everything in remote repository.
-          boiler Setup boilerplate files needed to manage dotfiles on remote.
-          sh     Setup POSIX shell environment files.
-          bash   Setup Bash shell environment files.
-          yash   Setup Yash shell environment files.
-	  git    Setup global Git configuration.
-          st     Setup ST (Simple Terminal) from suckless.
-          dmenu  Setup DMENU from suckless.
+          all      Setup everything in remote repository.
+          boiler   Setup boilerplate files needed to manage dotfiles on remote.
+          sh       Setup POSIX shell environment files.
+          bash     Setup Bash shell environment files.
+          yash     Setup Yash shell environment files.
+	  git      Setup global Git configuration.
+          st       Setup ST (Simple Terminal) from suckless.
+          dmenu    Setup DMENU from suckless.
+          dwm      Setup DWM from suckless.
+          suckless Setup configurations pertaining to suckless tools.
 
       -r <collection>
         Remove target dotfile collection. Be careful, as some of these
         options will effect multiple applications at once, leaving you with a
         potentially broken workspace. Current dotfile collection targets include
         the following:
-          all    Remove everything on local pulled from remote.
-          boiler Remove boilerplate files needed to manage dotfiles on remote.
-          sh     Remove POSIX shell environment files.
-          bash   Remove Bash shell environment files.
-          yash   Remove Yash shell environment files.
-	  git    Remove global Git configuration.
-          st     Remove ST (Simple Terminal) from suckless.
-          dmenu  Remove DMENU from suckless.
+          all      Remove everything on local pulled from remote.
+          boiler   Remove boilerplate files needed to manage dotfiles on remote.
+          sh       Remove POSIX shell environment files.
+          bash     Remove Bash shell environment files.
+          yash     Remove Yash shell environment files.
+	  git      Remove global Git configuration.
+          st       Remove ST (Simple Terminal) from suckless.
+          dmenu    Remove DMENU from suckless.
+          dwm      Remove DWM from suckless.
+          suckless Remove configurations pertaining to suckless tools.
 
   help
     Show help message for dm command. Overides git help command.
@@ -395,6 +399,32 @@ dm_dmenu()
   unset modules
 }
 
+# @brief Set or remove DWM.
+#
+# @param[in] $1 Include ("include") or exclude ("exclude") DMM.
+#
+# @since 0.1.0
+dm_dwm()
+{
+  modules="${XDG_CONFIG_HOME:-$HOME/.config}/dwm"
+
+  if [ "$1" = "include" ]; then
+    dm_modulemanip "$1" "$modules"
+    cd "$modules" || exit
+    make clean
+    make
+    sudo make install
+    cd "$HOME" || exit
+  else
+    cd "$modules" || exit
+    sudo make uninstall
+    cd "$HOME" || exit
+    dm_modulemanip "$1" "$modules"
+  fi
+
+  unset modules
+}
+
 # @brief Bootstrap collection of dotfiles.
 #
 # @param[in] $1 Include ("include") or exclude ("exclude") dotfile collection.
@@ -412,6 +442,7 @@ dm_bootstrap()
     dm_gitconf "$1"
     dm_st "$1"
     dm_dmenu "$1"
+    dm_dwm "$1"
     ;;
   boiler)
     dm_boiler "$1"
@@ -432,6 +463,14 @@ dm_bootstrap()
     dm_st "$1"
     ;;
   dmenu)
+    dm_dmenu "$1"
+    ;;
+  dwm)
+    dm_dwm "$1"
+    ;;
+  suckless)
+    dm_st "$1"
+    dm_dwm "$1"
     dm_dmenu "$1"
     ;;
   *)
