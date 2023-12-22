@@ -43,6 +43,7 @@ COMMANDS
           dmenu    Setup DMENU from suckless.
           dwm      Setup DWM from suckless.
           suckless Setup configurations pertaining to suckless tools.
+          wget     Setup wget configuration.
 
       -r <collection>
         Remove target dotfile collection. Be careful, as some of these
@@ -59,6 +60,7 @@ COMMANDS
           dmenu    Remove DMENU from suckless.
           dwm      Remove DWM from suckless.
           suckless Remove configurations pertaining to suckless tools.
+          wget     Remove wget configuration.
 
   help
     Show help message for dm command. Overides git help command.
@@ -347,6 +349,20 @@ dm_gitconf()
   unset files
 }
 
+# @brief Set or remove wget config files.
+#
+# @param[in] $1 Include ("include") or exclude ("exclude") wget config files.
+#
+# @since 0.1.0
+dm_wget()
+{
+  files=".config/wget/*"
+
+  dm_sparsemanip "$1" "$files"
+
+  unset files
+}
+
 # @brief Set or remove ST.
 #
 # @param[in] $1 Include ("include") or exclude ("exclude") ST.
@@ -443,6 +459,7 @@ dm_bootstrap()
     dm_st "$1"
     dm_dmenu "$1"
     dm_dwm "$1"
+    dm_wget "$1"
     ;;
   boiler)
     dm_boiler "$1"
@@ -472,6 +489,9 @@ dm_bootstrap()
     dm_st "$1"
     dm_dwm "$1"
     dm_dmenu "$1"
+    ;;
+  wget)
+    dm_wget "$1"
     ;;
   *)
     echo "$NAME: Unknown dotfile collection option $2" 2>&1
