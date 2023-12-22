@@ -7,3 +7,6 @@
 [submodule ".config/st"]
 	path = .config/st
 	url = https://github.com/rcdevtools/st.git
+[submodule ".config/dmenu"]
+	path = .config/dmenu
+	url = https://github.com/rcdevtools/dmenu.git
