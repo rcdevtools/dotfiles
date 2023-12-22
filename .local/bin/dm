@@ -38,6 +38,7 @@ COMMANDS
           sh     Setup POSIX shell environment files.
           bash   Setup Bash shell environment files.
           yash   Setup Yash shell environment files.
+	  git    Setup global Git configuration.
 
       -r <collection>
         Remove target dotfile collection. Be careful, as some of these
@@ -49,6 +50,7 @@ COMMANDS
           sh     Remove POSIX shell environment files.
           bash   Remove Bash shell environment files.
           yash   Remove Yash shell environment files.
+	  git    Remove global Git configuration.
 
   help
     Show help message for dm command. Overides git help command.
@@ -323,6 +325,20 @@ dm_yash()
   unset files
 }
 
+# @brief Set or remove Git config files.
+#
+# @param[in] $1 Include ("include") or exclude ("exclude") Git config files.
+#
+# @since 0.1.0
+dm_gitconf()
+{
+  files=".config/git/*"
+
+  dm_sparsemanip "$1" "$files"
+
+  unset files
+}
+
 # @brief Bootstrap collection of dotfiles.
 #
 # @param[in] $1 Include ("include") or exclude ("exclude") dotfile collection.
@@ -337,6 +353,7 @@ dm_bootstrap()
     dm_sh "$1"
     dm_bash "$1"
     dm_yash "$1"
+    dm_gitconf "$1"
     ;;
   boiler)
     dm_boiler "$1"
@@ -349,6 +366,9 @@ dm_bootstrap()
     ;;
   yash)
     dm_yash "$1"
+    ;;
+  git)
+    dm_gitconf "$1"
     ;;
   *)
     echo "$NAME: Unknown dotfile collection option $2" 2>&1
