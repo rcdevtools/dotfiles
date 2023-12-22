@@ -37,6 +37,7 @@ COMMANDS
           boiler Setup boilerplate files needed to manage dotfiles on remote.
           sh     Setup POSIX shell environment files.
           bash   Setup Bash shell environment files.
+          yash   Setup Yash shell environment files.
 
       -r <collection>
         Remove target dotfile collection. Be careful, as some of these
@@ -47,6 +48,7 @@ COMMANDS
           boiler Remove boilerplate files needed to manage dotfiles on remote.
           sh     Remove POSIX shell environment files.
           bash   Remove Bash shell environment files.
+          yash   Remove Yash shell environment files.
 
   help
     Show help message for dm command. Overides git help command.
@@ -302,6 +304,25 @@ dm_bash()
   unset files
 }
 
+# @brief Set or remove Yash shell files.
+#
+# This will delete Yash command history if you use the exclude option.
+#
+# @param[in] $1 Include ("include") or exclude ("exclude") Yash files.
+#
+# @since 0.1.0
+dm_yash()
+{
+  files=".yashrc .yash_profile"
+
+  dm_sparsemanip "$1" "$files"
+  if [ "$1" = "exclude" ]; then
+    rm -rfv ".yash_history"
+  fi
+
+  unset files
+}
+
 # @brief Bootstrap collection of dotfiles.
 #
 # @param[in] $1 Include ("include") or exclude ("exclude") dotfile collection.
@@ -315,6 +336,7 @@ dm_bootstrap()
     dm_boiler "$1"
     dm_sh "$1"
     dm_bash "$1"
+    dm_yash "$1"
     ;;
   boiler)
     dm_boiler "$1"
@@ -324,6 +346,9 @@ dm_bootstrap()
     ;;
   bash)
     dm_bash "$1"
+    ;;
+  yash)
+    dm_yash "$1"
     ;;
   *)
     echo "$NAME: Unknown dotfile collection option $2" 2>&1
