@@ -4,3 +4,6 @@
 [submodule ".local/share/polyglot"]
 	path = .local/share/polyglot
 	url = https://github.com/agkozak/polyglot.git
+[submodule ".config/st"]
+	path = .config/st
+	url = https://github.com/rcdevtools/st.git
