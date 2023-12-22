@@ -39,6 +39,7 @@ COMMANDS
           bash   Setup Bash shell environment files.
           yash   Setup Yash shell environment files.
 	  git    Setup global Git configuration.
+          st     Setup ST (Simple Terminal) from suckless.
 
       -r <collection>
         Remove target dotfile collection. Be careful, as some of these
@@ -51,6 +52,7 @@ COMMANDS
           bash   Remove Bash shell environment files.
           yash   Remove Yash shell environment files.
 	  git    Remove global Git configuration.
+          st     Remove ST (Simple Terminal) from suckless.
 
   help
     Show help message for dm command. Overides git help command.
@@ -339,6 +341,32 @@ dm_gitconf()
   unset files
 }
 
+# @brief Set or remove ST.
+#
+# @param[in] $1 Include ("include") or exclude ("exclude") ST.
+#
+# @since 0.1.0
+dm_st()
+{
+  modules="${XDG_CONFIG_HOME:-$HOME/.config}/st"
+
+  if [ "$1" = "include" ]; then
+    dm_modulemanip "$1" "$modules"
+    cd "$modules" || exit
+    make clean
+    make
+    sudo make install
+    cd "$HOME" || exit
+  else
+    cd "$modules" || exit
+    sudo make uninstall
+    cd "$HOME" || exit
+    dm_modulemanip "$1" "$modules"
+  fi
+
+  unset modules
+}
+
 # @brief Bootstrap collection of dotfiles.
 #
 # @param[in] $1 Include ("include") or exclude ("exclude") dotfile collection.
@@ -354,6 +382,7 @@ dm_bootstrap()
     dm_bash "$1"
     dm_yash "$1"
     dm_gitconf "$1"
+    dm_st "$1"
     ;;
   boiler)
     dm_boiler "$1"
@@ -369,6 +398,9 @@ dm_bootstrap()
     ;;
   git)
     dm_gitconf "$1"
+    ;;
+  st)
+    dm_st "$1"
     ;;
   *)
     echo "$NAME: Unknown dotfile collection option $2" 2>&1
