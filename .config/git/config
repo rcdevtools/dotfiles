@@ -1,0 +1,52 @@
+# SPDX-FileCopyrightText: 2023-2024 Jason Pena <jasonpena@awkless.com>
+# SPDX-License-Identifier: MIT
+
+[user]
+	name = Jason Pena
+	email = jasonpena@awkless.com
+	username = awkless
+	signingkey = 0FB451D8704DC421
+
+[init]
+	defaultBranch = main
+
+[core]
+	editor = vim
+	whitespace = fix,trailing-space,cr-at-eol
+	pager = less -FX
+
+[commit]
+	verbose = true
+	gpgsign = true
+
+[merge]
+	tool = vimdiff
+	conflictstyle = diff3
+
+[rebase]
+	autoStash = true
+
+[diff]
+	tool = vimdiff
+
+[rerere]
+	enabled = true
+	autoupdate = true
+
+[color]
+	ui = auto
+	branch = auto
+	diff = auto
+	grep = auto
+	interactive = auto
+	status = auto
+
+[alias]
+	flog  = log --oneline --decorate --graph --all
+	brnew = checkout -b
+	scmt  = commit -s
+	fix   = commit --amend
+	del   = branch -D
+	undo  = reset HEAD~1 --mixed
+	done  = !git push origin HEAD
+	qs    = status -sb

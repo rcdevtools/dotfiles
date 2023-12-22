@@ -1,0 +1,51 @@
+# SPDX-FileCopyrightText: 2023-2024 Jason Pena <jasonpena@awkless.com>
+# SPDX-License-Identifier: MIT
+
+# General linux stuff...
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# GnuPG stuff...
+secring.*
+
+# Patch/diff stuff...
+*.patch
+*.diff
+*.org
+*.rej
+
+# Etags, ctags, gtags (GNU global) and cscope stuff...
+TAGS
+.TAGS
+!TAGS/
+tags
+.tags
+!tags/
+gtags.files
+GTAGS
+GRTAGS
+GPATH
+GSYMS
+cscope.files
+cscope.out
+cscope.in.out
+cscope.po.out
+
+# Vim stuff...
+[._]*.s[a-v][a-z]
+!*.svg
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+Session.vim
+Sessionx.vim
+.netrwhist
+*~
+[._]*.un~
+
+# LibreOffice stuff...
+.~lock.*#
