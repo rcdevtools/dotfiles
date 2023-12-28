@@ -1,0 +1,5 @@
+#!/bin/sh
+# SPDX-FileCopyrightText: 2023-2024 Jason Pena <jasonpena@awkless.com>
+# SPDX-License-Identifier: MIT
+
+feh --no-fehbg --bg-scale "$HOME/pictures/wallpaper.jpg"
