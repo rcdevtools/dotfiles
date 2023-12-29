@@ -13,3 +13,6 @@
 [submodule ".config/dwm"]
 	path = .config/dwm
 	url = https://github.com/rcdevtools/dwm.git
+[submodule ".config/slock"]
+	path = .config/slock
+	url = https://github.com/rcdevtools/slock.git
