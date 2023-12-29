@@ -42,6 +42,7 @@ COMMANDS
           st       Setup ST (Simple Terminal) from suckless.
           dmenu    Setup DMENU from suckless.
           dwm      Setup DWM from suckless.
+          slock    Setup slock from suckless.
           suckless Setup configurations pertaining to suckless tools.
           wget     Setup wget configuration.
 
@@ -59,6 +60,7 @@ COMMANDS
           st       Remove ST (Simple Terminal) from suckless.
           dmenu    Remove DMENU from suckless.
           dwm      Remove DWM from suckless.
+          slock    Remove slock from suckless.
           suckless Remove configurations pertaining to suckless tools.
           wget     Remove wget configuration.
 
@@ -441,6 +443,35 @@ dm_dwm()
   unset modules
 }
 
+# @brief Set or remove slock.
+#
+# @param[in] $1 Include ("include") or exclude ("exclude") slock.
+#
+# @since 0.1.0
+dm_slock()
+{
+  modules="${XDG_CONFIG_HOME:-$HOME/.config}/slock"
+
+  if [ "$1" = "include" ]; then
+    dm_modulemanip "$1" "$modules"
+    cd "$modules" || exit
+    make clean
+    make
+    sudo make install
+    printf "Enter user to bind slock too: " >&2
+    read -r user
+    systemctl enable slock@"$user".service
+    cd "$HOME" || exit
+  else
+    cd "$modules" || exit
+    sudo make uninstall
+    cd "$HOME" || exit
+    dm_modulemanip "$1" "$modules"
+  fi
+
+  unset modules user
+}
+
 # @brief Bootstrap collection of dotfiles.
 #
 # @param[in] $1 Include ("include") or exclude ("exclude") dotfile collection.
@@ -459,6 +490,7 @@ dm_bootstrap()
     dm_st "$1"
     dm_dmenu "$1"
     dm_dwm "$1"
+    dm_slock "$1"
     dm_wget "$1"
     ;;
   boiler)
@@ -485,10 +517,14 @@ dm_bootstrap()
   dwm)
     dm_dwm "$1"
     ;;
+  slock)
+    dm_slock "$1"
+    ;;
   suckless)
     dm_st "$1"
     dm_dwm "$1"
     dm_dmenu "$1"
+    dm_slock "$1"
     ;;
   wget)
     dm_wget "$1"
