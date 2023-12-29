@@ -241,8 +241,8 @@ dm_modulemanip()
     set -f
 
     for module in $2; do
-      dm_git submodule init "$module"
-      dm_git submodule update "$module"
+      dm_git submodule update --recursive --init "$module"
+      dm_get submodule update --recursive --remote "$module"
     done
 
     unset IFS
