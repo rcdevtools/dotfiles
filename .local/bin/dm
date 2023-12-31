@@ -47,6 +47,7 @@ COMMANDS
           wget     Setup wget configuration.
           vim      Setup vim configuration.
           gpg      Setup gpg configuration.
+          gdb      Setup gdb configuration.
 
       -r <collection>
         Remove target dotfile collection. Be careful, as some of these
@@ -67,6 +68,7 @@ COMMANDS
           wget     Remove wget configuration.
           vim      Setup vim configuration.
           gpg      Setup gpg configuration.
+          gdb      Setup gdb configuration.
 
   help
     Show help message for dm command. Overides git help command.
@@ -497,7 +499,21 @@ dm_vim()
 # @since 0.1.0
 dm_gpg()
 {
-  files=".config/gpg/*"
+  files=".config/gnupg/*"
+
+  dm_sparsemanip "$1" "$files"
+
+  unset files
+}
+
+# @brief Set or remove gdb.
+#
+# @param[in] $1 Include ("include") or exclude ("exclude") gdb.
+#
+# @since 0.1.0
+dm_gdb()
+{
+  files=".config/gdb/*"
 
   dm_sparsemanip "$1" "$files"
 
@@ -526,6 +542,7 @@ dm_bootstrap()
     dm_wget "$1"
     dm_vim "$1"
     dm_gpg "$1"
+    dm_gdb "$1"
     ;;
   boiler)
     dm_boiler "$1"
@@ -568,6 +585,9 @@ dm_bootstrap()
     ;;
   gpg)
     dm_gpg "$1"
+    ;;
+  gdb)
+    dm_gdb "$1"
     ;;
   *)
     echo "$NAME: Unknown dotfile collection option $2" 2>&1
