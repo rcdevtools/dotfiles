@@ -50,6 +50,7 @@ COMMANDS
           gdb      Setup gdb configuration.
           tmux     Setup tmux configuration.
           vi       Setup ex/vi configuration.
+          fonts    Setup local fonts.
 
       -r <collection>
         Remove target dotfile collection. Be careful, as some of these
@@ -73,6 +74,7 @@ COMMANDS
           gdb      Remove gdb configuration.
           tmux     Remove tmux configuration.
           vi       Remove ex/vi configuration.
+          fonts    Remove local fonts.
 
   help
     Show help message for dm command. Overides git help command.
@@ -552,6 +554,20 @@ dm_vi()
   unset files
 }
 
+# @brief Set or remove fonts.
+#
+# @param[in] $1 Include ("include") or exclude ("exclude") vi.
+#
+# @since 0.1.0
+dm_fonts()
+{
+  files=".local/share/fonts/*"
+
+  dm_sparsemanip "$1" "$files"
+
+  unset files
+}
+
 # @brief Bootstrap collection of dotfiles.
 #
 # @param[in] $1 Include ("include") or exclude ("exclude") dotfile collection.
@@ -577,6 +593,7 @@ dm_bootstrap()
     dm_gdb "$1"
     dm_tmux "$1"
     dm_vi "$1"
+    dm_fonts "$1"
     ;;
   boiler)
     dm_boiler "$1"
@@ -628,6 +645,9 @@ dm_bootstrap()
     ;;
   vi)
     dm_vi "$1"
+    ;;
+  fonts)
+    dm_fonts "$1"
     ;;
   *)
     echo "$NAME: Unknown dotfile collection option $2" 2>&1
