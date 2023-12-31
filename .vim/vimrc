@@ -97,3 +97,46 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
     Plug 'jreybert/vimagit'
     call plug#end()
 endif
+
+" =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+" | UI Options                                                                |
+" =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+" Hail the 80 character limit!
+set textwidth=80
+set colorcolumn=80
+set nonumber
+set cursorline
+set signcolumn=yes
+
+" Configure command completion.
+set wildmenu
+set wildmode=longest:full,full
+set wildoptions=pum
+
+" Configure colorscheme.
+syntax on
+set background=dark
+set t_Co=256
+try
+    colorscheme astrotty
+catch
+    colorscheme default
+endtry
+
+" Fold settings..
+set foldmethod=marker
+set nofoldenable
+
+" Make splits more natural.
+set splitbelow
+set splitright
+
+" Show current mode and commands.
+set showmode
+set showcmd
+set cmdheight=1
+
+" Configure statusline.
+set laststatus=2
+set ruler
