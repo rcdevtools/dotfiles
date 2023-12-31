@@ -1,0 +1,30 @@
+# SPDX-FileCopyrightText: 2023-2024 Jason Pena <jasonpena@awkless.com>
+# SPDX-License-Identifier: MIT
+
+# Saving history by default...
+set history filename ~/.cache/gdb_history
+set history save
+
+# Scrolling should be enough...
+set height 0
+set width 0
+
+# Pretty print of structures...
+set print pretty
+
+# Disable TUI...
+define dt
+	tui disable
+end
+
+# Enable TUI...
+define et
+	tui enable
+	# Display the source and assembly window...
+	layout split
+	# Switch focus to the command window so that arrow keys work as expected...
+	focus cmd
+end
+
+# Refresh screen alias...
+alias -a rf = refresh
