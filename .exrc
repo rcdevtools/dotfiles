@@ -1,5 +1,5 @@
-" SDPX-FileCopyrightText: 2023 Jason Pena <jasonpena@awkless.com>
-" SPDX-LicenseIdentifier: MIT
+" SPDX-FileCopyrightText: 2023-2024 Jason Pena <jasonpena@awkless.com>
+" SPDX-License-Identifier: MIT
 " =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 " General Settings
 " =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
