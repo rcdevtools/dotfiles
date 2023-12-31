@@ -1,0 +1,71 @@
+" SPDX-FileCopyrightText: 2023-2024 Jason Pena <jasonpena@awkless.com>
+" SPDX-LicenseIdentifier: MIT
+
+" =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+" | General Settings                                                          |
+" =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+" Tiny-ViM does not have "eval".
+if has("eval")
+    let skip_defaults_vim = 1
+endif
+
+" Do not enforce Vi compatibility.
+set nocompatible
+
+" Enable filetype plugins.
+filetype plugin on
+filetype indent on
+
+" Set to auto read when a file is modified form the outside...
+set autoread
+au FocusGained,BufEnter * checktime
+
+" Establish default file settings.
+let $LANG = 'en'
+set langmenu=en
+set encoding=utf8
+set ffs=unix,dos,mac
+
+" Set history size and cursor position.
+set history=1000
+set scrolloff=999
+
+" Search settings.
+set smartcase
+set hlsearch
+set incsearch
+set magic
+set lazyredraw
+set wrapscan
+
+" Highlight trailing whitespace.
+match IncSearch '\s\+$'
+
+" Bracket settings.
+set showmatch
+set mat=3
+
+" Remove annoying error sounds.
+set noerrorbells
+set novisualbell
+set t_vb=
+set tm=500
+
+" Disable backup features.
+set nobackup
+set nowb
+set noswapfile
+
+" Disable mouse.
+set mouse=
+set ttymouse=
+
+" Stop complaints about switching buffer with changes.
+set hidden
+
+" Faster scrolling.
+set ttyfast
+
+" Make backspace more natural.
+set backspace=indent,eol,start
