@@ -140,3 +140,90 @@ set cmdheight=1
 " Configure statusline.
 set laststatus=2
 set ruler
+
+" =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+" | Keymappings                                                               |
+" =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+" Set mapleader...
+let mapleader = ","
+map , #
+
+" Use 'jj' as alternate form of entering normal mode.
+map! jj 
+
+" Move through args.
+map <leader>al :w:n
+map <leader>ah :w:N
+
+" Split window.
+map <leader>hs :split
+map <leader>vs :vsplit
+
+" Window movement...
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+map <C-e> <C-W>=
+
+" Buffer mappings...
+nmap <leader>bo :enew<cr>
+nmap <leader>bd :Bclose<cr>
+nmap <leader>ba :bufdo bd<cr>
+nmap <leader>bl :bnext<cr>
+nmap <leader>bh :bprevious<cr>
+
+" Tab mappings...
+nmap <leader>tn :tabnew<space>
+nmap <leader>to :tabonly<cr>
+nmap <leader>tc :tabclose<cr>
+nmap <leader>tm :tabmove<space>
+nmap <leader>tl :tabnext<cr>
+nmap <leader>th :tabprevious<cr>
+
+" Move to current directory of file...
+nmap <leader>cd :cd %:p:h<cr>:pwd<cr>
+
+" Toggle paste mode...
+nmap <leader>pp :setlocal paste!<cr>
+
+" Jump between hunks for git gutter...
+nmap <leader>gh <Plug>GitGutterNextHunk
+nmap <leader>gl <Plug>GitGutterPrevHunk
+nmap <leader>ga <Plug>GitGutterStageHunk
+nmap <leader>gu <Plug>GitGutterUndoHunk
+
+" Spell checking...
+nmap <leader>ss :setlocal spell!<cr>
+nmap <leader>sl ]s
+nmap <leader>sh [s
+nmap <leader>sa zg
+nmap <leader>sc z=
+
+" Use TAB to access secondary functions (primarily filters and toggles).
+map 	 #Z
+
+" TAB n  Toggles between number and nonumber.
+map @NU@ :set nu:map #Zn @NONU@:"--- line numbers on ---"
+map @NONU@ :set nonu:map #Zn @NU@:"--- line numbers off ---"
+map #Zn @NU@
+
+" TAB l  Toggles between list and nolist.
+map @LIST@ :set list:map #Zl @NOLIST@:"--- list on ---"
+map @NOLIST@ :set nolist:map #Zl @LIST@:"--- list off ---"
+map #Zl @LIST@
+
+" TAB i  Toggles between ignorecase and noignorecase.
+map @IC@ :set ic:map #Zi @NOIC@:"--- case insensitive ---"
+map @NOIC@ :set noic:map #Zi @IC@:"--- case sensitive ---"
+map #Zi @NOIC@
+
+" TAB a  Toggle between autoindent and noautoindent.
+map @AI@ :set ai:map #Za @NOAI@:"--- autoindent on ---"
+map @NOAI@ :set noai:map #Za @AI@:"--- autoindent off ---"
+map #Za @NOAI@
+
+" TAB h  Turn of search highlight.
+map @NOHL@ :nohl:"--- turn off search highlight ---"
+map #Zh @NOHL@
