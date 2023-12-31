@@ -49,6 +49,7 @@ COMMANDS
           gpg      Setup gpg configuration.
           gdb      Setup gdb configuration.
           tmux     Setup tmux configuration.
+          vi       Setup ex/vi configuration.
 
       -r <collection>
         Remove target dotfile collection. Be careful, as some of these
@@ -71,6 +72,7 @@ COMMANDS
           gpg      Remove gpg configuration.
           gdb      Remove gdb configuration.
           tmux     Remove tmux configuration.
+          vi       Remove ex/vi configuration.
 
   help
     Show help message for dm command. Overides git help command.
@@ -536,6 +538,20 @@ dm_tmux()
   unset files
 }
 
+# @brief Set or remove vi.
+#
+# @param[in] $1 Include ("include") or exclude ("exclude") vi.
+#
+# @since 0.1.0
+dm_vi()
+{
+  files=".exrc"
+
+  dm_sparsemanip "$1" "$files"
+
+  unset files
+}
+
 # @brief Bootstrap collection of dotfiles.
 #
 # @param[in] $1 Include ("include") or exclude ("exclude") dotfile collection.
@@ -560,6 +576,7 @@ dm_bootstrap()
     dm_gpg "$1"
     dm_gdb "$1"
     dm_tmux "$1"
+    dm_vi "$1"
     ;;
   boiler)
     dm_boiler "$1"
@@ -608,6 +625,9 @@ dm_bootstrap()
     ;;
   tmux)
     dm_tmux "$1"
+    ;;
+  vi)
+    dm_vi "$1"
     ;;
   *)
     echo "$NAME: Unknown dotfile collection option $2" 2>&1
