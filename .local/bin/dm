@@ -38,13 +38,14 @@ COMMANDS
           sh       Setup POSIX shell environment files.
           bash     Setup Bash shell environment files.
           yash     Setup Yash shell environment files.
-	  git      Setup global Git configuration.
+          git      Setup global Git configuration.
           st       Setup ST (Simple Terminal) from suckless.
           dmenu    Setup DMENU from suckless.
           dwm      Setup DWM from suckless.
           slock    Setup slock from suckless.
           suckless Setup configurations pertaining to suckless tools.
           wget     Setup wget configuration.
+          vim      Setup vim configuration.
 
       -r <collection>
         Remove target dotfile collection. Be careful, as some of these
@@ -56,13 +57,14 @@ COMMANDS
           sh       Remove POSIX shell environment files.
           bash     Remove Bash shell environment files.
           yash     Remove Yash shell environment files.
-	  git      Remove global Git configuration.
+          git      Remove global Git configuration.
           st       Remove ST (Simple Terminal) from suckless.
           dmenu    Remove DMENU from suckless.
           dwm      Remove DWM from suckless.
           slock    Remove slock from suckless.
           suckless Remove configurations pertaining to suckless tools.
           wget     Remove wget configuration.
+          vim      Setup vim configuration.
 
   help
     Show help message for dm command. Overides git help command.
@@ -472,6 +474,20 @@ dm_slock()
   unset modules user
 }
 
+# @brief Set or remove vim.
+#
+# @param[in] $1 Include ("include") or exclude ("exclude") vim.
+#
+# @since 0.1.0
+dm_vim()
+{
+  files=".vim/*"
+
+  dm_sparsemanip "$1" "$files"
+
+  unset files
+}
+
 # @brief Bootstrap collection of dotfiles.
 #
 # @param[in] $1 Include ("include") or exclude ("exclude") dotfile collection.
@@ -492,6 +508,7 @@ dm_bootstrap()
     dm_dwm "$1"
     dm_slock "$1"
     dm_wget "$1"
+    dm_vim "$1"
     ;;
   boiler)
     dm_boiler "$1"
@@ -528,6 +545,9 @@ dm_bootstrap()
     ;;
   wget)
     dm_wget "$1"
+    ;;
+  vim)
+    dm_vim "$1"
     ;;
   *)
     echo "$NAME: Unknown dotfile collection option $2" 2>&1
