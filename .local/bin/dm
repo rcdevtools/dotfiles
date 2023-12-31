@@ -46,6 +46,7 @@ COMMANDS
           suckless Setup configurations pertaining to suckless tools.
           wget     Setup wget configuration.
           vim      Setup vim configuration.
+          gpg      Setup gpg configuration.
 
       -r <collection>
         Remove target dotfile collection. Be careful, as some of these
@@ -65,6 +66,7 @@ COMMANDS
           suckless Remove configurations pertaining to suckless tools.
           wget     Remove wget configuration.
           vim      Setup vim configuration.
+          gpg      Setup gpg configuration.
 
   help
     Show help message for dm command. Overides git help command.
@@ -488,6 +490,20 @@ dm_vim()
   unset files
 }
 
+# @brief Set or remove gpg.
+#
+# @param[in] $1 Include ("include") or exclude ("exclude") gpg.
+#
+# @since 0.1.0
+dm_gpg()
+{
+  files=".config/gpg/*"
+
+  dm_sparsemanip "$1" "$files"
+
+  unset files
+}
+
 # @brief Bootstrap collection of dotfiles.
 #
 # @param[in] $1 Include ("include") or exclude ("exclude") dotfile collection.
@@ -509,6 +525,7 @@ dm_bootstrap()
     dm_slock "$1"
     dm_wget "$1"
     dm_vim "$1"
+    dm_gpg "$1"
     ;;
   boiler)
     dm_boiler "$1"
@@ -548,6 +565,9 @@ dm_bootstrap()
     ;;
   vim)
     dm_vim "$1"
+    ;;
+  gpg)
+    dm_gpg "$1"
     ;;
   *)
     echo "$NAME: Unknown dotfile collection option $2" 2>&1
