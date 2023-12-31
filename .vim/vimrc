@@ -227,3 +227,46 @@ map #Za @NOAI@
 " TAB h  Turn of search highlight.
 map @NOHL@ :nohl:"--- turn off search highlight ---"
 map #Zh @NOHL@
+
+" =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+" | Abbreviations                                                             |
+" =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+"
+" To lazy to type this...
+ab spdxcr  SPDX-FileCopyrightText:
+ab spdxli  SPDX-License-Identifier:
+ab eawk    jasonpena@awkless.com
+ab eclg    jpalex@nmsu.edu
+ab ecs     jpena@cs.nmsu.edu
+ab gpl2o   GPL-2.0-only
+ab gpl2l   GPL-2.0-or-later
+ab gpl3o   GPL-3.0-only
+ab gpl3l   GPL-3.0-or-later
+ab lgpl2o  LGPL-2.0-only
+ab lgpl2l  LGPL-2.0-or-later
+ab lgpl3o  LGPL-3.0-only
+ab lgpl3l  LGPL-3.0-or-later
+ab ccbs4   CC-BY-SA-4.0
+ab cc01    CC0-1.0
+ab jpawk   Jason Pena <jasonpena@awkless.com>
+ab signoff Signed-off-by:
+
+" Yes, I am bad at spelling...
+ab Arithemtic  Arithmetic
+ab Deos        Does
+ab Esspecially Especially
+ab Februrary   February
+ab Feburary    February
+ab Maintanance Maintenance
+ab Psudo       Psuedo
+ab Similiar    Similar
+ab Wendsday    Wednesday
+ab Wensday     Wednesday
+ab arithemtic  arithmetic
+ab deos        does
+ab esspecially especially
+ab feburary    February
+ab maintanance maintenance
+ab psudo       psuedo
+ab similiar    similar
+ab wendsday    wednesday
