@@ -48,6 +48,7 @@ COMMANDS
           vim      Setup vim configuration.
           gpg      Setup gpg configuration.
           gdb      Setup gdb configuration.
+          tmux     Setup tmux configuration.
 
       -r <collection>
         Remove target dotfile collection. Be careful, as some of these
@@ -66,9 +67,10 @@ COMMANDS
           slock    Remove slock from suckless.
           suckless Remove configurations pertaining to suckless tools.
           wget     Remove wget configuration.
-          vim      Setup vim configuration.
-          gpg      Setup gpg configuration.
-          gdb      Setup gdb configuration.
+          vim      Remove vim configuration.
+          gpg      Remove gpg configuration.
+          gdb      Remove gdb configuration.
+          tmux     Remove tmux configuration.
 
   help
     Show help message for dm command. Overides git help command.
@@ -520,6 +522,20 @@ dm_gdb()
   unset files
 }
 
+# @brief Set or remove tmux.
+#
+# @param[in] $1 Include ("include") or exclude ("exclude") tmux.
+#
+# @since 0.1.0
+dm_tmux()
+{
+  files=".config/tmux/*"
+
+  dm_sparsemanip "$1" "$files"
+
+  unset files
+}
+
 # @brief Bootstrap collection of dotfiles.
 #
 # @param[in] $1 Include ("include") or exclude ("exclude") dotfile collection.
@@ -543,6 +559,7 @@ dm_bootstrap()
     dm_vim "$1"
     dm_gpg "$1"
     dm_gdb "$1"
+    dm_tmux "$1"
     ;;
   boiler)
     dm_boiler "$1"
@@ -588,6 +605,9 @@ dm_bootstrap()
     ;;
   gdb)
     dm_gdb "$1"
+    ;;
+  tmux)
+    dm_tmux "$1"
     ;;
   *)
     echo "$NAME: Unknown dotfile collection option $2" 2>&1
