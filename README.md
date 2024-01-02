@@ -77,7 +77,37 @@ Enjoy!
 
 ## Usage
 
-TODO
+As you may have noticed from the installation section of this document, this
+entire dotfile management project uses a singular command to maintain all
+dotfiles. This command is called `dm` (dotfile manager). The `dm` command is a
+very fancy wrapper over the `git`(1) command that treats your `$HOME` as the
+main working tree where all changes are kept track of by a bare repository in
+`$XDG_CONFIG_HOME/dotfiles` or `$HOME/.config/dotfiles` if you do not have
+`$XDG_CONFIG_HOME` defined.
+
+Run `dm help` to get a simple help message that describes all the possible
+commands and their options for `dm`. The main feature of `dm` is its bootstrap
+command. The bootstrap command of `dm` allows you to add or remove dotfile
+configurations without changing the history of your `$HOME`. This is done using
+the sparse checkout feature and/or submodule feature of `git`(1). Thus, if you
+do not want certain dotfiles to be present in your `$HOME` you can use the
+bootstrap command!
+
+Example, remove the dotfiles for vim:
+
+```
+# dm bootstrap -r vim
+```
+
+Example, add the dotfiles for vim:
+
+```
+# dm bootstrap -s vim
+```
+
+Besides the bootstrap command, you can use the regular commands provided by
+`git`(1) since `dm` is just a wrapper over it. Thus, create or modify dotfiles
+in your `$HOME` and add, commit, and push them using `dm`.
 
 ## Contributing
 
