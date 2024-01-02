@@ -564,6 +564,7 @@ dm_fonts()
   files=".local/share/fonts/*"
 
   dm_sparsemanip "$1" "$files"
+  fc-cache -fv
 
   unset files
 }
