@@ -14,7 +14,66 @@ others would probably find nonsensical. Enjoy, but proceed with caution!
 
 ## Installation
 
-TODO
+You will need Git and a stable internet connection. It is optional but
+recommended to have a internet fetch content tool like wget or curl as you only
+need to download the `dm` command script into your `$HOME/.local/bin`. The `dm`
+command is the primary interface for working with this dotfile collection
+project.
+
+Thus, the first thing we need will be the `dm` command! Make sure that
+`$HOME/.local/bin` exists with the `mkdir` command.
+
+Getting the `dm` command via Git:
+
+```
+# git clone https://github.com/rcdevtools/dotfiles.git
+# cd dotfiles
+# cp .local/bin/dm ~/.local/bin/dm
+```
+
+Getting the `dm` command via wget:
+
+```
+# cd ~/.local/bin
+# wget https://raw.githubusercontent.com/rcdevtools/dotfiles/main/.local/bin/dm
+```
+
+Getting the `dm` command via curl:
+
+```
+# cd ~/.local/bin
+# curl -O https://raw.githubusercontent.com/rcdevtools/dotfiles/main/.local/bin/dm
+```
+
+You can also just use your internet browser and get the `dm` command from the
+project's GitHub page at <https://github.com/rcdevtools/dotflies>. Regardless,
+of the method you use from the above, just make sure you have a copy of the `dm`
+command in your `$HOME/.local/bin` directory.
+
+Now, make sure that you update your `$PATH` to include the `$HOME/.local/bin`
+directory. If your `$PATH` is not setup properly, then just run:
+
+```
+# export PATH="$PATH:$HOME/.local/bin"
+```
+
+Finally, run `dm bootstrap -s all` to install the entire dotfile project into
+your `$HOME`.
+
+Keep in mind, if you have existing dotfiles that collide with the dotfiles
+provided by this project, then your existing dotfiles will be backed up into
+`$XDG_CACHE_HOME/dotfiles_backup` or `$HOME/.cache/dotfiles_backup` if you do
+not have `$XDG_CACHE_HOME` defined. After your local untracked dotfiles have
+been backed up, then the dotfiles of this project will be applied to your
+`$HOME`.
+
+Another note to remember, this project assumes that you already have the
+programs that each of its dotfiles configure installed on your machine. There
+are no checks for existing software when you use the `dm` command. See the
+__Usage__ section of this document for more information about using the `dm`
+command.
+
+Enjoy!
 
 ## Usage
 
