@@ -13,4 +13,4 @@
 *.jpg         binary
 *.jpeg        binary
 *.yaml        text diff=yaml
-*.otf         text
+*.otf         eol=crlf
