@@ -13,8 +13,9 @@ xautolock -detectsleep -time 10 -locker slock &
 
 # Open some applications by default...
 st -e tmux -u &
-xsetroot -cursor_name hand2
+st -e aerc &
 firefox &
+xsetroot -cursor_name hand2
 
 # Start up DWM...
 sh "${XDG_CONFIG_HOME:-$HOME/.config}/dwm/status.sh" &
