@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: MIT
 
 NAME="dm"
-VERSION=0.1.0
+VERSION=0.2.0
 GIT_VERSION="$(git version)"
 EXIT_FAILURE=1
 
@@ -51,6 +51,7 @@ COMMANDS
           tmux     Setup tmux configuration.
           vi       Setup ex/vi configuration.
           fonts    Setup local fonts.
+          aerc     Setup configuration files for aerc.
 
       -r <collection>
         Remove target dotfile collection. Be careful, as some of these
@@ -75,6 +76,7 @@ COMMANDS
           tmux     Remove tmux configuration.
           vi       Remove ex/vi configuration.
           fonts    Remove local fonts.
+          aerc     Remove configuration files for aerc.
 
   help
     Show help message for dm command. Overides git help command.
@@ -569,6 +571,20 @@ dm_fonts()
   unset files
 }
 
+# @brief Set or remove aerc.
+#
+# @param[in] $1 Include ("include") or exclude ("exclude") aerc.
+#
+# @since 0.1.0
+dm_aerc()
+{
+  files=".config/aerc/*"
+
+  dm_sparsemanip "$1" "$files"
+
+  unset files
+}
+
 # @brief Bootstrap collection of dotfiles.
 #
 # @param[in] $1 Include ("include") or exclude ("exclude") dotfile collection.
@@ -595,6 +611,7 @@ dm_bootstrap()
     dm_tmux "$1"
     dm_vi "$1"
     dm_fonts "$1"
+    dm_aerc "$1"
     ;;
   boiler)
     dm_boiler "$1"
@@ -649,6 +666,9 @@ dm_bootstrap()
     ;;
   fonts)
     dm_fonts "$1"
+    ;;
+  aerc)
+    dm_aerc "$1"
     ;;
   *)
     echo "$NAME: Unknown dotfile collection option $2" 2>&1
