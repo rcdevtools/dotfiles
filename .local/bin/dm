@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: MIT
 
 NAME="dm"
-VERSION=0.2.0
+VERSION=0.17.1
 GIT_VERSION="$(git version)"
 EXIT_FAILURE=1
 
@@ -581,6 +581,9 @@ dm_aerc()
   files=".config/aerc/*"
 
   dm_sparsemanip "$1" "$files"
+  if [ "$1" = "include" ]; then
+    chmod -v 600 "${XDG_CONFIG_HOME:-$HOME/.config}/aerc/accounts.conf"
+  fi
 
   unset files
 }
