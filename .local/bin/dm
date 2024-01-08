@@ -651,6 +651,7 @@ dm_bootstrap()
     ;;
   vim)
     dm_vim "$1"
+    dm_vi "$1"
     ;;
   gpg)
     dm_gpg "$1"
