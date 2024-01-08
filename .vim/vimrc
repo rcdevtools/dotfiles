@@ -35,15 +35,12 @@ set scrolloff=999
 set smartcase
 set hlsearch
 set incsearch
-set magic
 set lazyredraw
-set wrapscan
 
 " Highlight trailing whitespace.
 match IncSearch '\s\+$'
 
 " Bracket settings.
-set showmatch
 set mat=3
 
 " Remove annoying error sounds.
@@ -69,6 +66,9 @@ set ttyfast
 
 " Make backspace more natural.
 set backspace=indent,eol,start
+
+" Source regular Vi config.
+so ~/.exrc
 
 " =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 " | Plugin Management                                                         |
@@ -105,7 +105,6 @@ endif
 " Hail the 80 character limit!
 set textwidth=80
 set colorcolumn=80
-set nonumber
 set cursorline
 set signcolumn=yes
 
@@ -132,8 +131,7 @@ set nofoldenable
 set splitbelow
 set splitright
 
-" Show current mode and commands.
-set showmode
+" Show commands.
 set showcmd
 set cmdheight=1
 
@@ -147,10 +145,6 @@ set ruler
 
 " Set mapleader...
 let mapleader = ","
-map , #
-
-" Use 'jj' as alternate form of entering normal mode.
-map! jj 
 
 " Move through args.
 map <leader>al :w:n
@@ -200,73 +194,3 @@ nmap <leader>sl ]s
 nmap <leader>sh [s
 nmap <leader>sa zg
 nmap <leader>sc z=
-
-" Use TAB to access secondary functions (primarily filters and toggles).
-map 	 #Z
-
-" TAB n  Toggles between number and nonumber.
-map @NU@ :set nu:map #Zn @NONU@:"--- line numbers on ---"
-map @NONU@ :set nonu:map #Zn @NU@:"--- line numbers off ---"
-map #Zn @NU@
-
-" TAB l  Toggles between list and nolist.
-map @LIST@ :set list:map #Zl @NOLIST@:"--- list on ---"
-map @NOLIST@ :set nolist:map #Zl @LIST@:"--- list off ---"
-map #Zl @LIST@
-
-" TAB i  Toggles between ignorecase and noignorecase.
-map @IC@ :set ic:map #Zi @NOIC@:"--- case insensitive ---"
-map @NOIC@ :set noic:map #Zi @IC@:"--- case sensitive ---"
-map #Zi @NOIC@
-
-" TAB a  Toggle between autoindent and noautoindent.
-map @AI@ :set ai:map #Za @NOAI@:"--- autoindent on ---"
-map @NOAI@ :set noai:map #Za @AI@:"--- autoindent off ---"
-map #Za @NOAI@
-
-" TAB h  Turn of search highlight.
-map @NOHL@ :nohl:"--- turn off search highlight ---"
-map #Zh @NOHL@
-
-" =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-" | Abbreviations                                                             |
-" =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-"
-" To lazy to type this...
-ab spdxcr  SPDX-FileCopyrightText:
-ab spdxli  SPDX-License-Identifier:
-ab eawk    jasonpena@awkless.com
-ab eclg    jpalex@nmsu.edu
-ab ecs     jpena@cs.nmsu.edu
-ab gpl2o   GPL-2.0-only
-ab gpl2l   GPL-2.0-or-later
-ab gpl3o   GPL-3.0-only
-ab gpl3l   GPL-3.0-or-later
-ab lgpl2o  LGPL-2.0-only
-ab lgpl2l  LGPL-2.0-or-later
-ab lgpl3o  LGPL-3.0-only
-ab lgpl3l  LGPL-3.0-or-later
-ab ccbs4   CC-BY-SA-4.0
-ab cc01    CC0-1.0
-ab jpawk   Jason Pena <jasonpena@awkless.com>
-ab signoff Signed-off-by:
-
-" Yes, I am bad at spelling...
-ab Arithemtic  Arithmetic
-ab Deos        Does
-ab Esspecially Especially
-ab Februrary   February
-ab Feburary    February
-ab Maintanance Maintenance
-ab Psudo       Psuedo
-ab Similiar    Similar
-ab Wendsday    Wednesday
-ab Wensday     Wednesday
-ab arithemtic  arithmetic
-ab deos        does
-ab esspecially especially
-ab feburary    February
-ab maintanance maintenance
-ab psudo       psuedo
-ab similiar    similar
-ab wendsday    wednesday
